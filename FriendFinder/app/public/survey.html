@@ -172,6 +172,24 @@
             <p><a href="/api/friends">API Friends List</a></p>
         </div>
         </footer>
+
+        <div id="matchModal" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h3 class="modal-title">Your Match</h1>
+					</div>
+					<div class="modal-body">
+						<h2 id="match"></h2>
+						<img id="matchImage" src="#">
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
     
     </div>
       
@@ -181,20 +199,24 @@
         event.preventDefault();
         function validate(){
             var isValid = true;
+            // checks all answers to see if answered
             if ($("option[value='default']").is(':checked')){
             
              isValid = false;
         };
+            // checks name input
             if ($("#name").val().trim() === ""){
                 
              isValid = false;
         }
+            // checks image input
             if ($("#photo").val().trim() === ""){
                 
              isValid = false;
             }
             return isValid;
         }
+            // if survey is completed create new post 
         if (validate()){
             var formData = {
                 name: $("#name").val(),
@@ -212,9 +234,11 @@
                     $("#q10").val(),
                 ]
             };
-        
+            // creates post from form data gathered from survey
         $.post("/api/friends", formData, function(data){
-            alert("finding match");
+            $("#match").text(data.name);
+			$("#matchImage").attr("src", data.photo);
+			$("#matchModal").modal("toggle");
         });
       }else (alert("Please fill out all fields!"));
     })
