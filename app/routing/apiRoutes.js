@@ -29,12 +29,15 @@ module.exports = function(app) {
                 totalDiff += scoreDiff;
             }
 
-        }
+        
         // checks for lowest difference to match user and friend from array
         if (totalDiff < matchPoints){
             match = i;
             matchPoints = totalDiff
+            console.log(match)
+            console.log(matchPoints);
         }
+    }
 
 
         friendData.push(user);
